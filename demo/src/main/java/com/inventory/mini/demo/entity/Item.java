@@ -1,4 +1,4 @@
-package com.inventory.mini.entity;
+package com.inventory.mini.demo.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +26,9 @@ public class Item {
 	private int quantity;
 
 	public Item() {
-		super();
 	}
 
 	public Item(String name, String description, int quantity) {
-		super();
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;

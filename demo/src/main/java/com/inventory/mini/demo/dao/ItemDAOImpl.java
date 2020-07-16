@@ -1,4 +1,4 @@
-package com.inventory.mini.dao;
+package com.inventory.mini.demo.dao;
 
 import java.util.List;
 
@@ -7,18 +7,20 @@ import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inventory.mini.entity.Item;
+import com.inventory.mini.demo.entity.Item;
 
+@Repository
 public class ItemDAOImpl implements ItemDAO {
 
 	private EntityManager entityManager;
 	
 	
 	@Autowired
-	public ItemDAOImpl(EntityManager entityManager) {
-		this.entityManager = entityManager;
+	public ItemDAOImpl(EntityManager theEntityManager) {
+		entityManager = theEntityManager;
 	}
 
 
@@ -30,7 +32,7 @@ public class ItemDAOImpl implements ItemDAO {
 		
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		Query<Item> qry = currentSession.createQuery("from item", Item.class);
+		Query<Item> qry = currentSession.createQuery("from Item", Item.class);
 		
 		List<Item> items = qry.getResultList();
 		
@@ -66,13 +68,13 @@ public class ItemDAOImpl implements ItemDAO {
 
 	@Override
 	@Transactional
-	public void deleteById(int id) {
+	public void deleteById(int itemid) {
 		// TODO Auto-generated method stub
 		Session session = entityManager.unwrap(Session.class);
 		
 		Query qry = session.createQuery("delete from item where id=:itemId");
 		
-		qry.setParameter("itemId", id);
+		qry.setParameter("itemId", itemid);
 		
 		qry.executeUpdate(); 	
 		

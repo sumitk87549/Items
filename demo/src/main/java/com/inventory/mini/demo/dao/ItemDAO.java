@@ -1,8 +1,8 @@
-package com.inventory.mini.dao;
+package com.inventory.mini.demo.dao;
 
 import java.util.List;
 
-import com.inventory.mini.entity.Item;
+import com.inventory.mini.demo.entity.Item;
 
 
 public interface ItemDAO {
