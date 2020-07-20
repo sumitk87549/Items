@@ -71,10 +71,13 @@ public class Item {
 	}
 
 	public void setQuantity(int quantity) {
-		if(quantity >= 0)
+		if(quantity > 0 && quantity <=100)
 		this.quantity = quantity;
+		else if(quantity <= 0){
+			this.quantity = 1;
+		}
 		else {
-			this.quantity = 0;
+			this.quantity = 100;
 		}
 	}
 

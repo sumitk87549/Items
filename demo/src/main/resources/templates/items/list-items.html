@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 
 <head>
     <!-- Required meta tags -->
@@ -18,11 +20,17 @@
 
 	<h3>ITEM DIRECTORY</h3>
 	
+
+	
+    
+    <br>
+	
 	<a th:href="@{/items/addForm}"
-	class="btn btn-info btn-sm"
-	>
+		sec:authorize="hasRole('PLAYER')"
+		class="btn btn-info btn-sm">
 		Add Item
 	</a>
+
 	
 	<hr>
 	
@@ -32,7 +40,7 @@
 				<th>Name</th>
 				<th>Description</th>
 				<th>Quantity</th>
-				<th>Action</th>
+				<th sec:authorize="hasRole('PLAYER')">Action</th>
 			</tr>
 		</thead>
 		
@@ -44,21 +52,27 @@
 				<td th:text="${titem.quantity}" />	
 				<td>
 					<a th:href="@{/items/updateForm(itemId=${titem.id})}"
+					sec:authorize="hasRole('PLAYER')"
 					class="btn btn-warning btn-sm"
 					>Update</a>
 					
-					
 					<a th:href="@{/items/delete(itemId=${titem.id})}"
 					class="btn btn-secondary btn-sm"
-					onclick="if(!(confirm('Are you sure You want to delete selected item?'))) return false"
-					>Delete</a>
+					sec:authorize="hasRole('PLAYER')"
+					onclick="if(!(confirm('Are you sure You want to delete selected item?'))) return false">
+					Delete</a>
+					
 				</td>
 			</tr>
 		</tbody>		
 	</table>
 	
-</div>
+<br><br>
+Authenticated username: <span sec:authentication="name"></span> <br>
+Authenticated roles: <span sec:authentication="principal.authorities"></span>
 	
+</div>
+    	
 </body>
 </html>
 
