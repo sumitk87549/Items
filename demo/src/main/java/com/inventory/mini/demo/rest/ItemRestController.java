@@ -11,35 +11,35 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.inventory.mini.demo.dao.ItemDAO;
 import com.inventory.mini.demo.entity.Item;
-
+import com.inventory.mini.demo.service.ItemService;
 
 @RestController
 @RequestMapping("/api")
 public class ItemRestController {
 	
-	private ItemDAO itemdao;
+	private ItemService itemService;
 
+	
 	@Autowired
-	public ItemRestController(ItemDAO theItemdao) {
-		itemdao = theItemdao;
+	public ItemRestController(ItemService theItemdao) {
+		itemService = theItemdao;
 	}
 	
 	
 	@GetMapping("/items")
 	public List<Item> findAll(){
-		return itemdao.findAll();
+		return itemService.findAll();
 	}
 	
 	
 	@GetMapping("/items/{itemId}")
 	public Item getItem(@PathVariable int itemId) {
-		Item item = itemdao.findById(itemId);
+		Item item = itemService.findById(itemId);
+		
 		
 		if(item == null) {
-			throw new RuntimeException("Id not found - " +itemId);
+			throw new RuntimeException("id not found - " + itemId);
 		}
 		
 		return item;
@@ -51,7 +51,7 @@ public class ItemRestController {
 		
 		item.setId(0);
 		
-		itemdao.save(item);
+		itemService.save(item);
 		
 		return item;
 	}
@@ -59,7 +59,7 @@ public class ItemRestController {
 	@PutMapping("/items")
 	public Item updateItem(@RequestBody Item item) {
 		
-		itemdao.save(item);
+		itemService.save(item);
 		
 		return item;
 	}
@@ -67,12 +67,14 @@ public class ItemRestController {
 	@DeleteMapping("/items/{itemId}")
 	public String deleteItem(@PathVariable int itemId) {
 		
-		Item item = itemdao.findById(itemId);
 		
-		if(item == null)
-				throw new RuntimeException("Employee id not found - "+itemId);
+		Item item = itemService.findById(itemId);
 		
-		itemdao.deleteById(itemId);
+		if(item == null) {
+			throw new RuntimeException("Employee id not found - "+itemId);	
+		}
+		
+		itemService.deleteById(itemId);		
 		
 		return "Deleted Successfully";
 	}

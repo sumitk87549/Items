@@ -27,7 +27,15 @@ public class Item {
 
 	public Item() {
 	}
-
+	
+	public Item(int id, String name, String description, int quantity) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+	}
+	
 	public Item(String name, String description, int quantity) {
 		this.name = name;
 		this.description = description;
@@ -63,7 +71,11 @@ public class Item {
 	}
 
 	public void setQuantity(int quantity) {
+		if(quantity >= 0)
 		this.quantity = quantity;
+		else {
+			this.quantity = 0;
+		}
 	}
 
 	@Override
