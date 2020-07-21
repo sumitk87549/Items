@@ -46,6 +46,7 @@ public class ItemRestController {
 	}
 	
 	
+	
 	@PostMapping("/items")
 	public Item addItem(@RequestBody Item item) {
 		
@@ -71,7 +72,7 @@ public class ItemRestController {
 		Item item = itemService.findById(itemId);
 		
 		if(item == null) {
-			throw new RuntimeException("Item id not found - "+itemId);	
+			throw new RuntimeException("Employee id not found - "+itemId);	
 		}
 		
 		itemService.deleteById(itemId);		
