@@ -39,7 +39,7 @@ public class ItemRestController {
 		
 		
 		if(item == null) {
-			throw new RuntimeException("id not found - " + itemId);
+			throw new RuntimeException("Item id not found - " + itemId);
 		}
 		
 		return item;
@@ -71,7 +71,7 @@ public class ItemRestController {
 		Item item = itemService.findById(itemId);
 		
 		if(item == null) {
-			throw new RuntimeException("Employee id not found - "+itemId);	
+			throw new RuntimeException("Item id not found - "+itemId);	
 		}
 		
 		itemService.deleteById(itemId);		
