@@ -24,8 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.inMemoryAuthentication().withUser(users.username("player").password("admin").roles("PLAYER"))
 		.withUser(users.username("watcher").password("other").roles("WATCHER"));
 		
-		
-		
 	}
 	
     @Override
@@ -39,11 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/items/**").hasRole("PLAYER")
                 .antMatchers(HttpMethod.POST, "/api/items/").hasRole("PLAYER")
                 .antMatchers(HttpMethod.PUT, "/api/items/**").hasRole("PLAYER")
-                .antMatchers(HttpMethod.PATCH, "/api/items/**").hasRole("PLAYER")
-                .antMatchers(HttpMethod.DELETE, "/api/items/**").hasRole("PLAYER")
-                .and()
-                .csrf().disable()
-                .formLogin().disable();
+                .antMatchers(HttpMethod.DELETE, "/api/items/**").hasRole("PLAYER").and()
+                .formLogin()
+				.permitAll();
     }
 
 	
