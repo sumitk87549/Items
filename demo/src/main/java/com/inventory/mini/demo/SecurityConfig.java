@@ -1,7 +1,9 @@
 package com.inventory.mini.demo;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
@@ -25,6 +27,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		
 	}
+	
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http
+                //HTTP Basic authentication
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/api/items/**").hasRole("PLAYER")
+                .antMatchers(HttpMethod.POST, "/api/items/").hasRole("PLAYER")
+                .antMatchers(HttpMethod.PUT, "/api/items/**").hasRole("PLAYER")
+                .antMatchers(HttpMethod.PATCH, "/api/items/**").hasRole("PLAYER")
+                .antMatchers(HttpMethod.DELETE, "/api/items/**").hasRole("PLAYER")
+                .and()
+                .csrf().disable()
+                .formLogin().disable();
+    }
 
 	
 	
