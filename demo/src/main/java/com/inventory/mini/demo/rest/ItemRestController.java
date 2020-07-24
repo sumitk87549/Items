@@ -1,8 +1,10 @@
 package com.inventory.mini.demo.rest;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,11 @@ public class ItemRestController {
 		itemService = theItemdao;
 	}
 	
+	
+	@RequestMapping("/user")
+	public Principal User(Principal principal) {
+		return principal;
+	}
 	
 	@GetMapping("/items")
 	public List<Item> findAll(){
