@@ -13,7 +13,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		return new User("player", "admin", new ArrayList<>());
 	}
 
