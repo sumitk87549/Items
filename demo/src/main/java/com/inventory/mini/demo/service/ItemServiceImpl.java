@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.inventory.mini.demo.InventoryApplication;
 import com.inventory.mini.demo.entity.Item;
 import com.inventory.mini.demo.repository.ItemRepository;
 
@@ -16,14 +15,14 @@ import com.inventory.mini.demo.repository.ItemRepository;
 public class ItemServiceImpl implements ItemService {
 
 	private ItemRepository itemRepository;
-    private static final Logger logger = LogManager.getLogger(ItemService.class);
-	
+	private static final Logger logger = LogManager.getLogger(ItemService.class);
+
 	@Autowired
 	public ItemServiceImpl(ItemRepository itemRepository) {
 		super();
 		this.itemRepository = itemRepository;
 
-		 logger.warn("Service Initialized***********************");
+		logger.warn("Service Initialized***********************");
 	}
 
 	@Override
@@ -35,17 +34,16 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public Item findById(int theId) {
 		Optional<Item> result = itemRepository.findById(theId);
-		
-		Item theItem= null;
-		
+
+		Item theItem = null;
+
 		if (result.isPresent()) {
-			theItem= result.get();
-		}
-		else {
+			theItem = result.get();
+		} else {
 			// we didn't find the employee
 			throw new RuntimeException("Did not find employee id - " + theId);
 		}
-		
+
 		return theItem;
 	}
 
@@ -53,7 +51,7 @@ public class ItemServiceImpl implements ItemService {
 	public void save(Item theItem) {
 		// TODO Auto-generated method stub
 		itemRepository.save(theItem);
-        logger.info("An Item Added or Updated!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		logger.info("An Item Added or Updated!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 	}
 
@@ -61,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
 	public void deleteById(int theId) {
 		// TODO Auto-generated method stub
 		itemRepository.deleteById(theId);
-		 logger.info("An Item DeletedXXXXXXXXXXXXXXXX");
+		logger.info("An Item DeletedXXXXXXXXXXXXXXXX");
 
 	}
 

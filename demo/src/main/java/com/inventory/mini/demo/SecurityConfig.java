@@ -1,74 +1,43 @@
 package com.inventory.mini.demo;
 
-
-
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
-@EnableOAuth2Sso
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
 
-        http.
-        	csrf()
-        	.disable()
-        	.antMatcher("/**")
-        	.authorizeRequests()
-        	.antMatchers("/")
-        	.permitAll()
-        	.anyRequest()
-        	.authenticated();
-    }
-    
+	@Autowired
+	private MyUserDetailsService myUserDetailsService;
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		// TODO Auto-generated method stub
+		auth.userDetailsService(myUserDetailsService);
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return NoOpPasswordEncoder.getInstance();
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		// TODO Auto-generated method stub
+		http.csrf().disable().authorizeRequests().antMatchers("/api/authenticate").permitAll()
+				.antMatchers("/authenticate").permitAll().anyRequest().authenticated();
+	}
+
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 }
-
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.http.HttpMethod;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.User.UserBuilder;
-//
-//
-//@Configuration
-//@EnableWebSecurity
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		// TODO Auto-generated method stub
-////		super.configure(auth);
-//		
-//		UserBuilder users= User.withDefaultPasswordEncoder();
-//		
-//		auth.inMemoryAuthentication().withUser(users.username("player").password("admin").roles("PLAYER"))
-//		.withUser(users.username("watcher").password("other").roles("WATCHER"));
-//		
-//	}
-//	
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        http
-//                //HTTP Basic authentication
-//                .httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/api/items/**").hasRole("PLAYER")
-//                .antMatchers(HttpMethod.POST, "/api/items/").hasRole("PLAYER")
-//                .antMatchers(HttpMethod.PUT, "/api/items/**").hasRole("PLAYER")
-//                .antMatchers(HttpMethod.DELETE, "/api/items/**").hasRole("PLAYER").and()
-//                .formLogin()
-//				.permitAll();
-//    }
-//
-//	
-//	
-//}
-
